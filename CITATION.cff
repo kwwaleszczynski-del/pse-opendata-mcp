@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+type: software
+title: "pse-opendata-mcp: MCP server for Polish power-system data from the public reports of PSE"
+abstract: >-
+  A Model Context Protocol server that lets LLM assistants query Polish power-system data (day-ahead prices,
+  demand, wind and PV generation, net cross-border flows, curtailment of renewables, the balancing market) from
+  the public reports of PSE S.A., the Polish transmission system operator, through the pse-opendata library.
+  Answers are aggregated by default, capped, and state source, retrieval time, time zone and units once.
+  Not affiliated with PSE S.A.
+authors:
+  - family-names: "Waleszczyński"
+    given-names: "Konrad"
+version: 0.1.0
+date-released: "2026-11-16"
+license: MIT
+repository-code: "https://github.com/kwwaleszczynski-del/pse-opendata-mcp"
+keywords:
+  - model context protocol
+  - electricity market
+  - power system
+  - Poland
+  - open data

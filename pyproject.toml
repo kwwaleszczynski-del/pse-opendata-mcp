@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pse-opendata-mcp"
+dynamic = ["version"]
+description = "MCP server for Polish power-system data (prices, demand, generation, cross-border flows, RES curtailment) from the public reports of PSE, with compact, token-frugal answers."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Konrad Waleszczyński" }]
+keywords = ["mcp", "model-context-protocol", "pse", "poland", "electricity", "power-system", "energy-market", "rce", "open-data"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "pse-opendata>=0.2.1,<0.3",
+    "mcp>=2.3,<3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+bench = ["tiktoken>=0.7"]
+
+[project.urls]
+Homepage = "https://github.com/kwwaleszczynski-del/pse-opendata-mcp"
+Library = "https://github.com/kwwaleszczynski-del/pse-opendata"
+
+[project.scripts]
+pse-opendata-mcp = "pse_opendata_mcp.server:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "pse_opendata_mcp.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "scripts"]
+markers = ["live: calls the real PSE servers (run with --live)"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pse_opendata_mcp"]
+known-local-folder = ["conftest"]
