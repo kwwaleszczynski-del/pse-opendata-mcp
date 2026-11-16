@@ -1,7 +1,7 @@
 # pse-opendata-mcp
 
 [![tests](https://github.com/kwwaleszczynski-del/pse-opendata-mcp/actions/workflows/tests.yml/badge.svg)](https://github.com/kwwaleszczynski-del/pse-opendata-mcp/actions/workflows/tests.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/kwwaleszczynski-del/pse-opendata-mcp/blob/main/LICENSE)
 
 An [MCP](https://modelcontextprotocol.io) server that lets an LLM assistant query Polish power-system data: day-ahead
 prices (RCE, SDAC), demand, wind and PV generation, net cross-border flows, curtailment of renewables and the
@@ -73,6 +73,8 @@ and of the configuration file depends on the client):
 
 With a `pip` installation use `"command": "pse-opendata-mcp"` and `"args": []`. For clients that connect over HTTP,
 `pse-opendata-mcp --transport streamable-http` serves `http://127.0.0.1:8000/mcp`.
+
+<!-- mcp-name: io.github.kwwaleszczynski-del/pse-opendata-mcp -->
 
 ## Examples
 
@@ -150,7 +152,7 @@ day,pv_bal,pv_net,wi_bal,wi_net,total,h
 <!-- examples:end -->
 
 Outputs of every tool, including a 25-hour day, a truncated table, rejected calls and the republication check:
-[docs/live_outputs.md](docs/live_outputs.md).
+[docs/live_outputs.md](https://github.com/kwwaleszczynski-del/pse-opendata-mcp/blob/main/docs/live_outputs.md).
 
 ## Token cost
 
@@ -317,7 +319,7 @@ Statistics of a report's fields: intervals with and without data, mean, min, max
 
 All data come from public reports of **PSE S.A.** (Polskie Sieci Elektroenergetyczne) at
 `https://api.raporty.pse.pl/api`. No key is needed. This package does not include or redistribute PSE data, except
-small samples of real responses used as test fixtures (see [tests/fixtures/README.md](tests/fixtures/README.md))
+small samples of real responses used as test fixtures (see [tests/fixtures/README.md](https://github.com/kwwaleszczynski-del/pse-opendata-mcp/blob/main/tests/fixtures/README.md))
 and the example outputs in this repository.
 
 PSE publishes conditions for re-using public sector information
@@ -349,7 +351,20 @@ python scripts/token_benchmark.py --write   # live: re-measure the token table
 Built on the official [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) (tested with `mcp` 2.3)
 and [`pse-opendata`](https://github.com/kwwaleszczynski-del/pse-opendata) 0.2.1.
 
+### Releasing
+
+1. Set the version in `src/pse_opendata_mcp/__init__.py`, `server.json` (two places) and `CITATION.cff`, and add
+   a `CHANGELOG.md` entry; a test checks that they agree.
+2. Publish a GitHub release with the tag `v<version>`. The `release` workflow builds the sdist and the wheel, runs
+   `twine check` and starts the console script from the wheel in a fresh environment. With the repository variable
+   `PYPI_PUBLISH` set to `true` it then uploads to PyPI with
+   [Trusted Publishing](https://docs.pypi.org/trusted-publishers/): PyPI must list the workflow `release.yml` and
+   the environment `pypi` of this repository as a publisher; no token is stored anywhere.
+3. Once the version is on PyPI, `mcp-publisher login github` and `mcp-publisher publish` in the repository root
+   send `server.json` to the [MCP registry](https://registry.modelcontextprotocol.io). The registry checks the
+   `mcp-name:` comment of this README as shown on PyPI, so this step comes after the upload.
+
 ## License
 
-Code: MIT, see [LICENSE](LICENSE). Data: PSE S.A. public reports, see
+Code: MIT, see [LICENSE](https://github.com/kwwaleszczynski-del/pse-opendata-mcp/blob/main/LICENSE). Data: PSE S.A. public reports, see
 [Data source and terms of use](#data-source-and-terms-of-use).

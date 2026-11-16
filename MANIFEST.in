@@ -1,0 +1,6 @@
+include CHANGELOG.md
+include CITATION.cff
+include server.json
+recursive-include tests *.py *.json *.md
+recursive-include scripts *.py
+recursive-include docs *.md
